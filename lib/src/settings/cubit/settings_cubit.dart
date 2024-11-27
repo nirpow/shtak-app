@@ -16,8 +16,6 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(state.copyWith(locale: locale));
   }
 
-  Future<void> updateShushSound(String soundId) async {}
-
   Future<void> updateLanguage(Locale newLocale) async {
     print(newLocale);
     if (newLocale == ui.PlatformDispatcher.instance.locale) {

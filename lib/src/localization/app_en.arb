@@ -1,8 +1,24 @@
 {
-  "appTitle": "shtak",
+  "appTitle": "SHTAK",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Just be quiet."
   },
   "language": "Language",
-  "reset_settings": "Reset Settings"
+  "reset_settings": "Reset Settings",
+  "record_your_own": "Record Your Own",
+  "start": "START",
+  "stop": "STOP",
+  "basic": "Basic",
+  "bracha": "Bracha",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "share_app": "Share App",
+  "rate_app": "Rate App",
+  "preferences": "Preferences",
+  "support_us": "Support us",
+  "reset_settings_popup_title": "Reset Settings?",
+  "reset_settings_popup_content": "This will restore all settings to their default.",
+  "cancel": "Cancel",
+  "reset": "Reset",
+  "select_sound": "Select Sound"
 }

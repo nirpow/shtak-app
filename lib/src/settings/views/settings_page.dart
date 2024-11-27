@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -33,11 +34,15 @@ class SettingsPageState extends State<SettingsPage> {
       builder: (context, state) {
         return CupertinoPageScaffold(
           backgroundColor: CupertinoColors.black,
-          navigationBar: const CupertinoNavigationBar(
+          navigationBar: CupertinoNavigationBar(
+            leading: CupertinoNavigationBarBackButton(
+              color: CupertinoColors.white,
+              onPressed: () => Navigator.pop(context),
+            ),
             automaticallyImplyLeading: true,
             backgroundColor: CupertinoColors.black,
-            middle: Text('Settings',
-                style: TextStyle(color: CupertinoColors.white)),
+            middle: Text(AppLocalizations.of(context).settings,
+                style: const TextStyle(color: Colors.white)),
           ),
           child: SafeArea(
             child: CupertinoScrollbar(
@@ -49,11 +54,11 @@ class SettingsPageState extends State<SettingsPage> {
                       color: CupertinoColors.darkBackgroundGray,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    header: const Text('Preferences',
-                        style: TextStyle(color: CupertinoColors.white)),
+                    header: Text(AppLocalizations.of(context).preferences,
+                        style: const TextStyle(color: CupertinoColors.white)),
                     children: [
                       _buildFormRow(
-                        'Language',
+                        AppLocalizations.of(context).language,
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () => _showLanguagePicker(context),
@@ -63,7 +68,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       _buildFormRow(
-                        'Notifications',
+                        AppLocalizations.of(context).notifications,
                         CupertinoSwitch(
                           value: _notificationsEnabled,
                           onChanged: (value) =>
@@ -78,11 +83,11 @@ class SettingsPageState extends State<SettingsPage> {
                       color: CupertinoColors.darkBackgroundGray,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    header: const Text('Support',
-                        style: TextStyle(color: CupertinoColors.white)),
+                    header: Text(AppLocalizations.of(context).support_us,
+                        style: const TextStyle(color: CupertinoColors.white)),
                     children: [
                       _buildFormRow(
-                        'Share App',
+                        AppLocalizations.of(context).share_app,
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () =>
@@ -92,7 +97,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       _buildFormRow(
-                        'Rate App',
+                        AppLocalizations.of(context).rate_app,
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () => launchUrl(
@@ -107,10 +112,24 @@ class SettingsPageState extends State<SettingsPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: CupertinoButton.filled(
+                    child: ElevatedButton(
                       onPressed: () => _showResetAlert(context),
-                      child: Text(
-                        AppLocalizations.of(context).reset_settings,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.indigo,
+                        minimumSize: const Size(double.infinity, 56),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.delete, color: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(AppLocalizations.of(context).reset_settings,
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white)),
+                        ],
                       ),
                     ),
                   ),
@@ -153,16 +172,17 @@ class SettingsPageState extends State<SettingsPage> {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Reset Settings?'),
-        content: const Text('This will restore default settings.'),
+        title: Text(AppLocalizations.of(context).reset_settings_popup_title),
+        content:
+            Text(AppLocalizations.of(context).reset_settings_popup_content),
         actions: [
           CupertinoDialogAction(
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context).cancel),
             onPressed: () => Navigator.pop(context),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            child: const Text('Reset'),
+            child: Text(AppLocalizations.of(context).reset),
             onPressed: () {
               Navigator.pop(context);
             },

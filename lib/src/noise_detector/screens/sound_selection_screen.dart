@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shtak/src/noise_detector/bloc/noise_bloc.dart';
 import 'package:shtak/src/sound/services/audio_player_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SoundSelectionScreen extends StatefulWidget {
   static const routeName = '/sound';
@@ -19,10 +21,14 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: CupertinoNavigationBarBackButton(
+          color: CupertinoColors.white,
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: Colors.black,
         elevation: 0,
-        title:
-            const Text('Select Sound', style: TextStyle(color: Colors.white)),
+        title: Text(AppLocalizations.of(context).select_sound,
+            style: const TextStyle(color: Colors.white)),
       ),
       body: BlocBuilder<NoiseBloc, NoiseState>(
         builder: (context, state) {
@@ -67,25 +73,26 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(32),
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle record functionality
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor: Colors.indigo,
+                    minimumSize: const Size(double.infinity, 56),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(28),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.mic, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text('Record Your Own',
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      const Icon(Icons.mic, color: Colors.white),
+                      const SizedBox(width: 8),
+                      Text(AppLocalizations.of(context).record_your_own,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.white)),
                     ],
                   ),
                 ),
