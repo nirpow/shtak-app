@@ -13,7 +13,7 @@ class NoiseState extends Equatable {
     this.thresholdDB = 65.0,
     this.isListening = false,
     this.error,
-    this.selectedSoundId = 'shush',
+    this.selectedSoundId = 'basic_shush',
     this.canPlaySound = true,
   });
 

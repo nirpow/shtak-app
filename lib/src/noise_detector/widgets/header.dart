@@ -9,28 +9,42 @@ class NoiseHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {},
-            color: Colors.white54,
-          ),
-          BlocBuilder<NoiseBloc, NoiseState>(
-            buildWhen: (previous, current) =>
-                previous.isListening != current.isListening,
-            builder: (context, state) {
-              return IconButton(
-                icon: Icon(
-                  state.isListening ? Icons.volume_up : Icons.volume_off,
+      child: BlocBuilder<NoiseBloc, NoiseState>(
+        buildWhen: (previous, current) =>
+            previous.isListening != current.isListening,
+        builder: (context, state) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.settings_outlined,
+                  size: 32,
                 ),
-                color: state.isListening ? Colors.greenAccent : Colors.white54,
-                onPressed: () {},
-              );
-            },
-          ),
-        ],
+                onPressed: () {
+                  if (state.isListening) {
+                    context.read<NoiseBloc>().add(StopListening());
+                  }
+                  Navigator.of(context).pushNamed('/settings');
+                },
+                color: Colors.white60,
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.record_voice_over_rounded,
+                  size: 32,
+                ),
+                onPressed: () {
+                  if (state.isListening) {
+                    context.read<NoiseBloc>().add(StopListening());
+                  }
+                  Navigator.of(context).pushNamed('/sound');
+                },
+                color: Colors.white60,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

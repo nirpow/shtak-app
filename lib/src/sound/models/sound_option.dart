@@ -1,7 +1,9 @@
+import 'package:audioplayers/audioplayers.dart';
+
 class SoundOption {
   final String id;
   final String name;
-  final String assetPath;
+  final AssetSource assetPath;
 
   const SoundOption({
     required this.id,

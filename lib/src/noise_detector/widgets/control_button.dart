@@ -29,6 +29,7 @@ class ControlButton extends StatelessWidget {
             child: Text(
               state.isListening ? 'STOP' : 'START',
               style: const TextStyle(
+                color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1,

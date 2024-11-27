@@ -18,6 +18,15 @@ class UpdateThreshold extends NoiseEvent {
   List<Object?> get props => [threshold];
 }
 
+class UpdateSound extends NoiseEvent {
+  final String? soundId;
+
+  UpdateSound(this.soundId);
+
+  @override
+  List<Object?> get props => [soundId];
+}
+
 class NoiseReadingReceived extends NoiseEvent {
   final double decibels;
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:noise_meter/noise_meter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shtak/src/sound/services/sound_service.dart';
 
 part 'noise_event.dart';
@@ -22,11 +23,24 @@ class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
     on<UpdateThreshold>(_onUpdateThreshold);
     on<NoiseReadingReceived>(_onNoiseReadingReceived);
     on<NoiseError>(_onNoiseError);
+    on<UpdateSound>(_onUpdateSound);
     _init();
   }
 
   Future<void> _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final selectedSoundId = prefs.getString('selectedSoundId');
+    if (state.selectedSoundId != selectedSoundId) {
+      add(UpdateSound(selectedSoundId));
+    }
     await _soundService.init();
+  }
+
+  Future<void> _onUpdateSound(
+      UpdateSound event, Emitter<NoiseState> emit) async {
+    emit(state.copyWith(selectedSoundId: event.soundId));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('selectedSoundId', event.soundId ?? 'basic_shush');
   }
 
   Future<void> _onStartListening(
