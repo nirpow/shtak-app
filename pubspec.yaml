@@ -16,8 +16,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_launcher_icons: ^0.14.1
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.4.3
   noise_meter: ^5.0.2
   path_provider: ^2.1.5
   permission_handler: ^11.3.1
