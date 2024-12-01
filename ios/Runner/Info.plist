@@ -47,5 +47,11 @@
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs access to microphone to measure noise levels.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+    	<key>NSAllowsArbitraryLoads</key>
+    	<true/>
+	</dict>
+
 </dict>
 </plist>

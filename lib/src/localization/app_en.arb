@@ -20,5 +20,6 @@
   "reset_settings_popup_content": "This will restore all settings to their default.",
   "cancel": "Cancel",
   "reset": "Reset",
-  "select_sound": "Select Sound"
+  "select_sound": "Select Sound",
+  "sound_name_bracha": "Bracha"
 }

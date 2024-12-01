@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shtak/src/noise_detector/bloc/noise_bloc.dart';
+import 'package:shtak/src/noise_detector/screens/sound_selection_screen.dart';
+import 'package:shtak/src/settings/views/settings_page.dart';
 
 class NoiseHeader extends StatelessWidget {
   const NoiseHeader({super.key});
@@ -25,7 +27,7 @@ class NoiseHeader extends StatelessWidget {
                   if (state.isListening) {
                     context.read<NoiseBloc>().add(StopListening());
                   }
-                  Navigator.of(context).pushNamed('/settings');
+                  Navigator.of(context).pushNamed(SettingsPage.routeName);
                 },
                 color: Colors.white60,
               ),
@@ -38,7 +40,8 @@ class NoiseHeader extends StatelessWidget {
                   if (state.isListening) {
                     context.read<NoiseBloc>().add(StopListening());
                   }
-                  Navigator.of(context).pushNamed('/sound');
+                  Navigator.of(context)
+                      .pushNamed(SoundSelectionScreen.routeName);
                 },
                 color: Colors.white60,
               ),

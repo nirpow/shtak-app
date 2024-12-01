@@ -6,6 +6,9 @@ import 'package:shtak/src/settings/services/settings_service.dart';
 
 import 'src/app.dart';
 
+// TODO: contact us
+// TODO: privacy policy
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Ensure that the app is in portrait mode

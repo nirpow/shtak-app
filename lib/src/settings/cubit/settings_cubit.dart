@@ -17,7 +17,6 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> updateLanguage(Locale newLocale) async {
-    print(newLocale);
     if (newLocale == ui.PlatformDispatcher.instance.locale) {
       emit(state.copyWith(locale: null));
     } else {

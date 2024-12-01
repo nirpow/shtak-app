@@ -5,6 +5,8 @@ abstract class NoiseEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class LoadSounds extends NoiseEvent {}
+
 class StartListening extends NoiseEvent {}
 
 class StopListening extends NoiseEvent {}
@@ -18,10 +20,10 @@ class UpdateThreshold extends NoiseEvent {
   List<Object?> get props => [threshold];
 }
 
-class UpdateSound extends NoiseEvent {
+class SelectSound extends NoiseEvent {
   final String? soundId;
 
-  UpdateSound(this.soundId);
+  SelectSound(this.soundId);
 
   @override
   List<Object?> get props => [soundId];
@@ -34,6 +36,16 @@ class NoiseReadingReceived extends NoiseEvent {
 
   @override
   List<Object?> get props => [decibels];
+}
+
+class AddCustomSound extends NoiseEvent {
+  final String path;
+  final String name;
+
+  AddCustomSound(this.path, this.name);
+
+  @override
+  List<Object?> get props => [path, name];
 }
 
 class NoiseError extends NoiseEvent {

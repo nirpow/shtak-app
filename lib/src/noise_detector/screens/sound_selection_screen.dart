@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shtak/src/noise_detector/bloc/noise_bloc.dart';
-import 'package:shtak/src/sound/services/audio_player_service.dart';
+import 'package:shtak/src/noise_detector/widgets/record_sound_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SoundSelectionScreen extends StatefulWidget {
-  static const routeName = '/sound';
+  static const routeName = '/sounds';
   const SoundSelectionScreen({super.key});
 
   @override
@@ -14,7 +14,6 @@ class SoundSelectionScreen extends StatefulWidget {
 }
 
 class SoundSelectionScreenState extends State<SoundSelectionScreen> {
-  final sounds = AudioPlayerService().availableSounds.keys.toList();
   String? selectedSoundId;
   @override
   Widget build(BuildContext context) {
@@ -32,12 +31,13 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
       ),
       body: BlocBuilder<NoiseBloc, NoiseState>(
         builder: (context, state) {
+          final sounds = state.availableSounds.keys.toList();
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(16),
-                  itemCount: AudioPlayerService().availableSounds.length,
+                  itemCount: state.availableSounds.length,
                   itemBuilder: (context, index) {
                     return Card(
                       color: state.selectedSoundId == sounds[index]
@@ -48,16 +48,16 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
                         leading:
                             const Icon(Icons.music_note, color: Colors.blue),
                         title: Text(
-                          AudioPlayerService()
-                              .availableSounds[sounds[index]]!
-                              .name,
+                          state.availableSounds[sounds[index]]!.name,
                           style: const TextStyle(color: Colors.white),
                         ),
                         trailing: IconButton(
                           icon:
                               const Icon(Icons.play_arrow, color: Colors.blue),
                           onPressed: () {
-                            AudioPlayerService().play(sounds[index]);
+                            context
+                                .read<NoiseBloc>()
+                                .playSoundById(sounds[index]);
                           },
                         ),
                         selected: selectedSoundId == sounds[index],
@@ -65,7 +65,7 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
                         onTap: () {
                           context
                               .read<NoiseBloc>()
-                              .add(UpdateSound(sounds[index]));
+                              .add(SelectSound(sounds[index]));
                         },
                       ),
                     );
@@ -76,7 +76,10 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
                 padding: const EdgeInsets.all(32),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle record functionality
+                    showDialog(
+                      context: context,
+                      builder: (context) => const RecordSoundDialog(),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,

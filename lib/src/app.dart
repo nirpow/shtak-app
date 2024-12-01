@@ -8,7 +8,7 @@ import 'package:shtak/src/noise_detector/screens/sound_selection_screen.dart';
 import 'package:shtak/src/settings/cubit/settings_cubit.dart';
 import 'package:shtak/src/settings/cubit/settings_state.dart';
 import 'package:shtak/src/settings/views/settings_page.dart';
-import 'package:shtak/src/sound/sound_service_factory.dart';
+import 'package:shtak/src/audio/audio_service_factory.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<NoiseBloc>(
           create: (BuildContext context) => NoiseBloc(
-            soundService: SoundServiceFactory.create(),
+            soundService: AudioServiceFactory.create(),
           ),
         ),
       ],

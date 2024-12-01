@@ -4,17 +4,19 @@ import 'package:noise_meter/noise_meter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shtak/src/sound/services/sound_service.dart';
+import 'package:shtak/src/audio/models/sound_option.dart';
+import 'package:shtak/src/audio/services/audio_service.dart';
 
 part 'noise_event.dart';
 part 'noise_state.dart';
 
 class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
   final NoiseMeter _noiseMeter;
-  final SoundService _soundService;
+  final AudioService _soundService;
+
   StreamSubscription<NoiseReading>? _noiseSubscription;
 
-  NoiseBloc({required SoundService soundService})
+  NoiseBloc({required AudioService soundService})
       : _noiseMeter = NoiseMeter(),
         _soundService = soundService,
         super(const NoiseState()) {
@@ -23,24 +25,48 @@ class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
     on<UpdateThreshold>(_onUpdateThreshold);
     on<NoiseReadingReceived>(_onNoiseReadingReceived);
     on<NoiseError>(_onNoiseError);
-    on<UpdateSound>(_onUpdateSound);
+    on<SelectSound>(_onSelectSound);
+    on<LoadSounds>(_onLoadSounds);
+    on<AddCustomSound>(_onAddCustomSound);
+
+    add(LoadSounds());
     _init();
   }
 
   Future<void> _init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final selectedSoundId = prefs.getString('selectedSoundId');
-    if (state.selectedSoundId != selectedSoundId) {
-      add(UpdateSound(selectedSoundId));
-    }
     await _soundService.init();
   }
 
-  Future<void> _onUpdateSound(
-      UpdateSound event, Emitter<NoiseState> emit) async {
+  Future<void> playSoundByPath(String path) async {
+    await _soundService.playSoundByPath(path);
+  }
+
+  Future<void> playSoundById(String id) async {
+    await _soundService.play(id);
+  }
+
+  Future<void> _onLoadSounds(LoadSounds event, Emitter<NoiseState> emit) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final savedSoundId = prefs.getString('selected_sound_id');
+    emit(state.copyWith(
+      availableSounds: _soundService.availableSounds,
+      selectedSoundId: savedSoundId ?? _soundService.availableSounds.keys.first,
+    ));
+  }
+
+  Future<void> _onSelectSound(
+      SelectSound event, Emitter<NoiseState> emit) async {
     emit(state.copyWith(selectedSoundId: event.soundId));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('selectedSoundId', event.soundId ?? 'basic_shush');
+  }
+
+  Future<void> _onAddCustomSound(
+      AddCustomSound event, Emitter<NoiseState> emit) async {
+    _soundService.addCustomSound(event.path, event.name);
+    emit(state.copyWith(
+      availableSounds: _soundService.availableSounds,
+    ));
   }
 
   Future<void> _onStartListening(

@@ -1,9 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:shtak/src/sound/models/sound_option.dart';
+import 'package:shtak/src/audio/models/sound_option.dart';
 
-import 'sound_service.dart';
+import 'audio_service.dart';
 
-class AudioPlayerService implements SoundService {
+class AudioPlayerService implements AudioService {
   final AudioPlayer _player;
   final Map<String, SoundOption> _sounds;
 
@@ -21,11 +21,10 @@ class AudioPlayerService implements SoundService {
               name: "Mrs. Bracha"),
         };
 
-  Map<String, SoundOption> get availableSounds => _sounds;
-
   @override
   Future<void> init() async {
-    await _player.setVolume(1.0);
+    // await _player.setVolume(1.0);
+    // await _player.setPlayerMode(PlayerMode.lowLatency);
   }
 
   @override
@@ -38,7 +37,27 @@ class AudioPlayerService implements SoundService {
   }
 
   @override
+  Future<void> playSoundByPath(String path) async {
+    await _player.setSourceDeviceFile(path);
+    await _player.resume();
+  }
+
+  @override
   Future<void> dispose() async {
     await _player.dispose();
+  }
+
+  @override
+  Map<String, SoundOption> get availableSounds => Map.unmodifiable(_sounds);
+
+  @override
+  void addCustomSound(String path, String name) {
+    final id = 'custom_${DateTime.now().millisecondsSinceEpoch}';
+    _sounds[id] = SoundOption(
+      id: id,
+      name: name,
+      assetPath: DeviceFileSource(path),
+      isCustom: true,
+    );
   }
 }

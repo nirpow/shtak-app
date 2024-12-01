@@ -7,6 +7,7 @@ class NoiseState extends Equatable {
   final String? error;
   final String selectedSoundId;
   final bool canPlaySound;
+  final Map<String, SoundOption> availableSounds;
 
   const NoiseState({
     this.currentDB = 0.0,
@@ -15,6 +16,7 @@ class NoiseState extends Equatable {
     this.error,
     this.selectedSoundId = 'basic_shush',
     this.canPlaySound = true,
+    this.availableSounds = const {},
   });
 
   NoiseState copyWith({
@@ -24,15 +26,16 @@ class NoiseState extends Equatable {
     String? error,
     String? selectedSoundId,
     bool? canPlaySound,
+    Map<String, SoundOption>? availableSounds,
   }) {
     return NoiseState(
-      currentDB: currentDB ?? this.currentDB,
-      thresholdDB: thresholdDB ?? this.thresholdDB,
-      isListening: isListening ?? this.isListening,
-      error: error,
-      selectedSoundId: selectedSoundId ?? this.selectedSoundId,
-      canPlaySound: canPlaySound ?? this.canPlaySound,
-    );
+        currentDB: currentDB ?? this.currentDB,
+        thresholdDB: thresholdDB ?? this.thresholdDB,
+        isListening: isListening ?? this.isListening,
+        error: error,
+        selectedSoundId: selectedSoundId ?? this.selectedSoundId,
+        canPlaySound: canPlaySound ?? this.canPlaySound,
+        availableSounds: availableSounds ?? this.availableSounds);
   }
 
   @override
@@ -43,5 +46,6 @@ class NoiseState extends Equatable {
         error,
         selectedSoundId,
         canPlaySound,
+        availableSounds
       ];
 }
