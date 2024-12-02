@@ -39,13 +39,13 @@ class NoiseReadingReceived extends NoiseEvent {
 }
 
 class AddCustomSound extends NoiseEvent {
-  final String path;
-  final String name;
+  final String filename;
+  final String nickname;
 
-  AddCustomSound(this.path, this.name);
+  AddCustomSound(this.filename, this.nickname);
 
   @override
-  List<Object?> get props => [path, name];
+  List<Object?> get props => [filename, nickname];
 }
 
 class NoiseError extends NoiseEvent {

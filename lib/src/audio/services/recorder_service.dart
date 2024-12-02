@@ -10,12 +10,12 @@ class RecorderService {
         throw Exception('Permission required');
       }
       final dir = await getApplicationDocumentsDirectory();
-      final path =
-          '${dir.path}/custom_${DateTime.now().millisecondsSinceEpoch}.m4a';
+      final filename = 'custom_${DateTime.now().millisecondsSinceEpoch}.m4a';
 
-      await _recorder.start(const RecordConfig(), path: path);
+      await _recorder.start(const RecordConfig(),
+          path: '${dir.path}/$filename');
 
-      return path;
+      return filename;
     } on Exception catch (_) {
       return null;
     }

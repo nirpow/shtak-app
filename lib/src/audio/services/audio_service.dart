@@ -5,6 +5,6 @@ abstract class AudioService {
   Future<void> play(String soundId);
   Future<void> playSoundByPath(String path);
   Future<void> dispose();
-  void addCustomSound(String path, String name);
+  Future<void> addCustomSound(String filename, String name);
   Map<String, SoundOption> get availableSounds;
 }

@@ -13,7 +13,7 @@ class RecordSoundDialog extends StatefulWidget {
 class _RecordSoundDialogState extends State<RecordSoundDialog> {
   final _recorder = RecorderService();
   bool _isRecording = false;
-  String? _recordedPath;
+  String? _recordedFilename;
   bool _hasRecording = false;
   final _nameController = TextEditingController();
   int _currentStep = 0;
@@ -63,8 +63,10 @@ class _RecordSoundDialogState extends State<RecordSoundDialog> {
                 IconButton(
                   icon: const Icon(Icons.play_arrow, color: Colors.white),
                   onPressed: () {
-                    if (_recordedPath != null) {
-                      context.read<NoiseBloc>().playSoundByPath(_recordedPath!);
+                    if (_recordedFilename != null) {
+                      context
+                          .read<NoiseBloc>()
+                          .playSoundByPath(_recordedFilename!);
                     }
                   },
                   // onPressed: null,
@@ -153,7 +155,7 @@ class _RecordSoundDialogState extends State<RecordSoundDialog> {
 
   Future<void> _startRecording() async {
     try {
-      _recordedPath = await _recorder.startRecording();
+      _recordedFilename = await _recorder.startRecording();
       setState(() => _isRecording = true);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -171,9 +173,9 @@ class _RecordSoundDialogState extends State<RecordSoundDialog> {
   }
 
   void _saveRecording() {
-    if (_recordedPath != null && _nameController.text.trim().isNotEmpty) {
+    if (_recordedFilename != null && _nameController.text.trim().isNotEmpty) {
       context.read<NoiseBloc>().add(
-            AddCustomSound(_recordedPath!, _nameController.text.trim()),
+            AddCustomSound(_recordedFilename!, _nameController.text.trim()),
           );
       Navigator.of(context).pop();
     }
