@@ -2,7 +2,7 @@
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
-        android:label="shtak"
+        android:label="SHTAK"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
