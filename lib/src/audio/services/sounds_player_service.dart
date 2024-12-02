@@ -84,10 +84,35 @@ class SoundsPlayerService implements AudioService {
     final String? jsonString = prefs.getString('custom_sounds');
     final List<dynamic> decoded =
         jsonString == null ? [] : jsonDecode(jsonString);
+
     final sounds = decoded
         .map((map) => SoundOption.fromMap(map as Map<String, dynamic>))
         .toList();
+
     sounds.add(newSounds);
+
+    final List<Map<String, dynamic>> mapList =
+        sounds.map((sound) => sound.toMap()).toList();
+    await prefs.setString('custom_sounds', jsonEncode(mapList));
+  }
+
+  @override
+  Future<void> removeCustomSound(String soundId) async {
+    if (!_sounds[soundId]!.isCustom) {
+      throw Exception('Cannot remove built-in sound');
+    }
+    _sounds.remove(soundId);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? jsonString = prefs.getString('custom_sounds');
+    final List<dynamic> decoded =
+        jsonString == null ? [] : jsonDecode(jsonString);
+
+    final sounds = decoded
+        .map((map) => SoundOption.fromMap(map as Map<String, dynamic>))
+        .toList();
+
+    sounds.removeWhere((sound) => sound.id == soundId);
 
     final List<Map<String, dynamic>> mapList =
         sounds.map((sound) => sound.toMap()).toList();

@@ -45,29 +45,32 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
                           : Colors.grey[900],
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
-                        leading:
-                            const Icon(Icons.music_note, color: Colors.blue),
-                        title: Text(
-                          state.availableSounds[sounds[index]]!.name,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        trailing: IconButton(
-                          icon:
-                              const Icon(Icons.play_arrow, color: Colors.blue),
-                          onPressed: () {
+                          leading:
+                              const Icon(Icons.music_note, color: Colors.blue),
+                          title: Text(
+                            state.availableSounds[sounds[index]]!.name,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.play_arrow,
+                                color: Colors.blue),
+                            onPressed: () {
+                              context
+                                  .read<NoiseBloc>()
+                                  .playSoundById(sounds[index]);
+                            },
+                          ),
+                          selected: selectedSoundId == sounds[index],
+                          selectedTileColor: Colors.blue.withOpacity(0.2),
+                          onTap: () {
                             context
                                 .read<NoiseBloc>()
-                                .playSoundById(sounds[index]);
+                                .add(SelectSound(sounds[index]));
                           },
-                        ),
-                        selected: selectedSoundId == sounds[index],
-                        selectedTileColor: Colors.blue.withOpacity(0.2),
-                        onTap: () {
-                          context
-                              .read<NoiseBloc>()
-                              .add(SelectSound(sounds[index]));
-                        },
-                      ),
+                          onLongPress: () =>
+                              state.availableSounds[sounds[index]]!.isCustom
+                                  ? _showRemoveAlert(context, sounds[index])
+                                  : null),
                     );
                   },
                 ),
@@ -103,6 +106,30 @@ class SoundSelectionScreenState extends State<SoundSelectionScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  void _showRemoveAlert(BuildContext context, String soundId) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(AppLocalizations.of(context).remove_sound_popup_title),
+        content: Text(AppLocalizations.of(context).remove_sound_popup_content),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(AppLocalizations.of(context).cancel),
+            onPressed: () => Navigator.pop(context),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            child: Text(AppLocalizations.of(context).remove),
+            onPressed: () async {
+              context.read<NoiseBloc>().add(RemoveCustomSound(soundId));
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -48,6 +48,15 @@ class AddCustomSound extends NoiseEvent {
   List<Object?> get props => [filename, nickname];
 }
 
+class RemoveCustomSound extends NoiseEvent {
+  final String soundId;
+
+  RemoveCustomSound(this.soundId);
+
+  @override
+  List<Object?> get props => [soundId];
+}
+
 class NoiseError extends NoiseEvent {
   final String message;
 

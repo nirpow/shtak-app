@@ -21,5 +21,8 @@
   "cancel": "Cancel",
   "reset": "Reset",
   "select_sound": "Select Sound",
+  "remove_sound_popup_title": "Remove Sound?",
+  "remove_sound_popup_content": "This will remove the selected sound.",
+  "remove": "Remove",
   "sound_name_bracha": "Bracha"
 }

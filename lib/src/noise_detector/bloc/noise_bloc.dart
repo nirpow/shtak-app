@@ -28,6 +28,7 @@ class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
     on<SelectSound>(_onSelectSound);
     on<LoadSounds>(_onLoadSounds);
     on<AddCustomSound>(_onAddCustomSound);
+    on<RemoveCustomSound>(_onRemoveCustomSound);
     add(LoadSounds());
 
     _init();
@@ -46,7 +47,6 @@ class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
   }
 
   Future<void> _onLoadSounds(LoadSounds event, Emitter<NoiseState> emit) async {
-    print("_onLoadSounds");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final savedSoundId = prefs.getString('selected_sound_id');
     await _soundService.init();
@@ -60,12 +60,20 @@ class NoiseBloc extends Bloc<NoiseEvent, NoiseState> {
       SelectSound event, Emitter<NoiseState> emit) async {
     emit(state.copyWith(selectedSoundId: event.soundId));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('selected_sound_id', event.soundId ?? 'basic_shush');
+    await prefs.setString('selected_sound_id', event.soundId ?? 'basic_shush');
   }
 
   Future<void> _onAddCustomSound(
       AddCustomSound event, Emitter<NoiseState> emit) async {
-    _soundService.addCustomSound(event.filename, event.nickname);
+    await _soundService.addCustomSound(event.filename, event.nickname);
+    emit(state.copyWith(
+      availableSounds: _soundService.availableSounds,
+    ));
+  }
+
+  Future<void> _onRemoveCustomSound(
+      RemoveCustomSound event, Emitter<NoiseState> emit) async {
+    await _soundService.removeCustomSound(event.soundId);
     emit(state.copyWith(
       availableSounds: _soundService.availableSounds,
     ));
