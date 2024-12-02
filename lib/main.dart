@@ -3,16 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shtak/src/settings/cubit/settings_cubit.dart';
 import 'package:shtak/src/settings/services/settings_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'src/app.dart';
-
-// TODO: contact us
-// TODO: privacy policy
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Ensure that the app is in portrait mode
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Load the .env file
+  await dotenv.load(fileName: ".env");
 
   // Set up the SettingsService
   final settingsService = SettingsService();

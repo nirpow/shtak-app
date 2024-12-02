@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_dotenv: ^5.2.1
   flutter_launcher_icons: ^0.14.1
   flutter_localizations:
     sdk: flutter
@@ -44,3 +45,4 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/
     - assets/sounds/
+    - .env

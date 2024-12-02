@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -91,7 +92,7 @@ class SettingsPageState extends State<SettingsPage> {
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () =>
-                              Share.share('Check out this amazing app!'),
+                              Share.share('Did you heard about SHTAK App?'),
                           child: const Icon(CupertinoIcons.share,
                               color: CupertinoColors.activeBlue),
                         ),
@@ -105,6 +106,32 @@ class SettingsPageState extends State<SettingsPage> {
                             mode: LaunchMode.externalApplication,
                           ),
                           child: const Icon(CupertinoIcons.star,
+                              color: CupertinoColors.activeBlue),
+                        ),
+                      ),
+                      _buildFormRow(
+                        'Privacy Policy',
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => launchUrl(
+                            Uri.parse(dotenv.env['PRIVACY_POLICY_URL'] ?? ""),
+                            mode: LaunchMode.externalApplication,
+                          ),
+                          child: const Icon(CupertinoIcons.lock,
+                              color: CupertinoColors.activeBlue),
+                        ),
+                      ),
+                      _buildFormRow(
+                        'Contact Us',
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => launchUrl(
+                            Uri(
+                              scheme: 'mailto',
+                              path: dotenv.env['SUPPORT_EMAIL'],
+                            ),
+                          ),
+                          child: const Icon(CupertinoIcons.mail,
                               color: CupertinoColors.activeBlue),
                         ),
                       ),
