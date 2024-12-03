@@ -1,10 +1,10 @@
 {
   "appTitle": "SHTAK",
   "@appTitle": {
-    "description": "Just be quiet."
+    "description": "The title of the app"
   },
   "language": "Language",
-  "reset_settings": "Reset Settings",
+  "reset_settings": "Reset settings",
   "record_your_own": "Record Your Own",
   "start": "START",
   "stop": "STOP",
@@ -16,7 +16,7 @@
   "rate_app": "Rate App",
   "preferences": "Preferences",
   "support_us": "Support us",
-  "reset_settings_popup_title": "Reset Settings?",
+  "reset_settings_popup_title": "Reset settings?",
   "reset_settings_popup_content": "This will restore all settings to their default.",
   "cancel": "Cancel",
   "reset": "Reset",
@@ -24,5 +24,7 @@
   "remove_sound_popup_title": "Remove Sound?",
   "remove_sound_popup_content": "This will remove the selected sound.",
   "remove": "Remove",
-  "sound_name_bracha": "Bracha"
+  "sound_name_bracha": "Bracha",
+  "contact_us": "Contact Us",
+  "privacy_policy": "Privacy Policy"
 }

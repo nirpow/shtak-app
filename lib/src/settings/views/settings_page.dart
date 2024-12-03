@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shtak/src/settings/cubit/settings_cubit.dart';
 import 'package:shtak/src/settings/cubit/settings_state.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settings';
@@ -18,15 +19,29 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   bool _notificationsEnabled = true;
+  String? packageVersion;
 
   final Map<Locale, String> _languages = {
     const Locale('en'): 'English',
-    const Locale('he'): 'עברית',
+    // const Locale('he'): 'עברית',
   };
 
   void _handleLanguageChange(int index) {
     List<Locale> langList = _languages.keys.toList();
     context.read<SettingsCubit>().updateLanguage(langList[index]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPackageInfo();
+  }
+
+  void _loadPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      packageVersion = packageInfo.version;
+    });
   }
 
   @override
@@ -58,16 +73,16 @@ class SettingsPageState extends State<SettingsPage> {
                     header: Text(AppLocalizations.of(context).preferences,
                         style: const TextStyle(color: CupertinoColors.white)),
                     children: [
-                      _buildFormRow(
-                        AppLocalizations.of(context).language,
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => _showLanguagePicker(context),
-                          child: Text(_languages[state.locale] ?? '',
-                              style: const TextStyle(
-                                  color: CupertinoColors.activeBlue)),
-                        ),
-                      ),
+                      // _buildFormRow(
+                      //   AppLocalizations.of(context).language,
+                      //   CupertinoButton(
+                      //     padding: EdgeInsets.zero,
+                      //     onPressed: () => _showLanguagePicker(context),
+                      //     child: Text(_languages[state.locale] ?? '',
+                      //         style: const TextStyle(
+                      //             color: CupertinoColors.activeBlue)),
+                      //   ),
+                      // ),
                       _buildFormRow(
                         AppLocalizations.of(context).notifications,
                         CupertinoSwitch(
@@ -87,30 +102,30 @@ class SettingsPageState extends State<SettingsPage> {
                     header: Text(AppLocalizations.of(context).support_us,
                         style: const TextStyle(color: CupertinoColors.white)),
                     children: [
+                      // _buildFormRow(
+                      //   AppLocalizations.of(context).share_app,
+                      //   CupertinoButton(
+                      //     padding: EdgeInsets.zero,
+                      //     onPressed: () =>
+                      //         Share.share('Did you heard about SHTAK App?'),
+                      //     child: const Icon(CupertinoIcons.share,
+                      //         color: CupertinoColors.activeBlue),
+                      //   ),
+                      // ),
+                      // _buildFormRow(
+                      //   AppLocalizations.of(context).rate_app,
+                      //   CupertinoButton(
+                      //     padding: EdgeInsets.zero,
+                      //     onPressed: () => launchUrl(
+                      //       Uri.parse('https://apps.apple.com/app/your-app-id'),
+                      //       mode: LaunchMode.externalApplication,
+                      //     ),
+                      //     child: const Icon(CupertinoIcons.star,
+                      //         color: CupertinoColors.activeBlue),
+                      //   ),
+                      // ),
                       _buildFormRow(
-                        AppLocalizations.of(context).share_app,
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () =>
-                              Share.share('Did you heard about SHTAK App?'),
-                          child: const Icon(CupertinoIcons.share,
-                              color: CupertinoColors.activeBlue),
-                        ),
-                      ),
-                      _buildFormRow(
-                        AppLocalizations.of(context).rate_app,
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => launchUrl(
-                            Uri.parse('https://apps.apple.com/app/your-app-id'),
-                            mode: LaunchMode.externalApplication,
-                          ),
-                          child: const Icon(CupertinoIcons.star,
-                              color: CupertinoColors.activeBlue),
-                        ),
-                      ),
-                      _buildFormRow(
-                        'Privacy Policy',
+                        AppLocalizations.of(context).privacy_policy,
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () => launchUrl(
@@ -122,7 +137,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       _buildFormRow(
-                        'Contact Us',
+                        AppLocalizations.of(context).contact_us,
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () => launchUrl(
@@ -138,25 +153,29 @@ class SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                      onPressed: () => _showResetAlert(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
-                        minimumSize: const Size(double.infinity, 56),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: GestureDetector(
+                      onTap: () => _showResetAlert(context),
+                      child: Center(
+                        child: DefaultTextStyle(
+                          style: const TextStyle(
+                              fontSize: 16, color: CupertinoColors.systemRed),
+                          child: Text(
+                            AppLocalizations.of(context).reset_settings,
+                          ),
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.delete, color: Colors.white),
-                          const SizedBox(width: 8),
-                          Text(AppLocalizations.of(context).reset_settings,
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white)),
-                        ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Center(
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                            fontSize: 10, color: CupertinoColors.systemGrey),
+                        child: Text(
+                          packageVersion ?? 'unknown version',
+                        ),
                       ),
                     ),
                   ),
