@@ -19,6 +19,24 @@ class SoundsPlayerService implements AudioService {
               const SoundOption(id: "sounds/basic_shush.mp3", name: "Basic"),
           'bracha':
               const SoundOption(id: "sounds/bracha.mp3", name: "Mrs. Bracha"),
+          'clinking':
+              const SoundOption(id: "sounds/clinking.mp3", name: "Clinking"),
+          'clink': const SoundOption(id: "sounds/clink.mp3", name: "Clink"),
+          'shshshsh': const SoundOption(
+              id: "sounds/shshshsh.mp3", name: "Multiple Shush"),
+          'shueesh':
+              const SoundOption(id: "sounds/shueesh.mp3", name: "Shueesh"),
+          'info': const SoundOption(id: "sounds/info.mp3", name: "Info"),
+          // 'boring': const SoundOption(
+          //     id: "sounds/boring.mp3", name: "You Boring Mate"),
+          'beepbeep':
+              const SoundOption(id: "sounds/beepbeep.mp3", name: "Beep Beep"),
+          // 'censored':
+          //     const SoundOption(id: "sounds/censored.mp3", name: "Censored"),
+          'whistle':
+              const SoundOption(id: "sounds/whistle.mp3", name: "Whistle"),
+          'soft': const SoundOption(id: "sounds/soft.mp3", name: "Soft"),
+          'woman': const SoundOption(id: "sounds/woman.mp3", name: "Woman"),
         };
 
   @override
