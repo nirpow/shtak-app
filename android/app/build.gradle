@@ -12,7 +12,7 @@ plugins {
    }
 
 android {
-    namespace = "ai.fuzzle.shtak"
+    namespace = "com.example.shtak"
     compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
@@ -26,7 +26,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ai.fuzzle.shtak"
+        applicationId "ai.fuzzle.shtak"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
