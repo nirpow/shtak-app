@@ -5,7 +5,7 @@ Shtak is a simple app created to explore and understand the **app publishing pro
 
 ## Features  
 The app plays a **playing sound** when the user's environment exceeds a certain decibel level.
-https://github.com/nirpow/shtak-app/blob/main/README.md
+
 ## Google Play  
 The app is currently available on Playstore.
 <a href="https://play.google.com/store/apps/details?id=ai.fuzzle.shtak"> <img src="https://www.svgrepo.com/show/303482/google-play-badge-1-logo.svg" width="200"  /></a>
